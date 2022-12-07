@@ -32,8 +32,50 @@ public final class Student {
         this.id = id;
     }
 
+    public static Student of(String csv) {
+        String[] splitted = csv.split(",");
+
+        if (splitted.length!=5) {
+            throw new IllegalArgumentException();
+        }
+        String firstName = splitted[0];
+        String secondName = splitted[1];
+        Gender gender = null;
+        if (Objects.equals(splitted[2], "M")) {
+            gender = Gender.MALE;
+        } else if (Objects.equals(splitted[2], "W")) {
+            gender = Gender.FEMALE;
+        } else if (Objects.equals(splitted[2], "D")) {
+            gender = Gender.DIVERSE;
+        }
+        int number = Integer.parseInt(splitted[3]);
+        String schoolClass = splitted[4];
+        return new Student(secondName, firstName, gender, number, schoolClass);
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getSchoolClass() {
+        return schoolClass;
     }
 
     @Override

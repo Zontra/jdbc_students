@@ -5,6 +5,7 @@ import domain.Student;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -12,7 +13,8 @@ public record JdbcStudentRepository(Connection connection) implements StudentRep
 
     @Override
     public void deleteAll() throws SQLException {
-
+        Statement statement = connection.createStatement();
+        statement.executeUpdate("TRUNCATE TABLE if exists student");
     }
 
     @Override
