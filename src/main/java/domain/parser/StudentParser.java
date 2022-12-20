@@ -29,6 +29,7 @@ public class StudentParser {
                             return null;
                         }
                     }).filter(Objects::nonNull)
+                    .sorted()
                     .forEach(students::add);
         }
         return students;

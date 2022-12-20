@@ -18,7 +18,7 @@ public class DatabaseConnect {
     private static String password = "admin";
 
     public static void main(String[] args) throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:C:\\Users\\Patrick\\IdeaProjects\\StudentsJDBC", user, password);
+        connection = DriverManager.getConnection("jdbc:h2:~/resources/StudentsJDBC", user, password);
 
         Statement statement = connection.createStatement();
 
@@ -42,6 +42,8 @@ public class DatabaseConnect {
             for (int i = 0; i< 6; i++)
             System.out.println(rs.getMetaData().getColumnName(i));
         }
+
+
 
 
         connection.close();

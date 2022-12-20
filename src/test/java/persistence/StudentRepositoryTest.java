@@ -155,12 +155,66 @@ public class StudentRepositoryTest {
 
     @Nested
     class FindingStudentByNumberAndClass {
-        //TODO
+
+            @Test
+            void returns_empty_if_no_student() throws SQLException {
+                assertThat(repository.findByNumberAndClass(1, "6AHIF")).isEmpty();
+            }
+
+            @Test
+            void returns_empty_if_no_student_with_given_number_and_class() throws SQLException {
+                var students = List.of(
+                        new Student("Baar", "Simon", MALE, 1, "1AHIF"),
+                        new Student("Dohnal", "Matthias Markus Edwin", MALE, 2, "1AHIF"),
+                        new Student("Ertl", "Maxima", FEMALE, 36, "1AHIF"),
+                        new Student("Schally", "Martin", MALE, 17, "3BHIF"),
+                        new Student("Vesely", "Flora", FEMALE, 19, "3BHIF"),
+                        new Student("Winkler", "Philipp Josef", MALE, 20, "3BHIF"),
+                        new Student("Hofmann", "Dominik", MALE, 21, "3BHIF"),
+                        new Student("Filipa", "Fec", DIVERSE, 15, "1CHIF")
+                );
+                for (var student : students)
+                    repository.save(student);
+
+                var student = repository.findByNumberAndClass(15, "1CHIF");
+
+                assertThat(student).isNotEmpty();
+            }
     }
 
     @Nested
     class FindingStudentsByClass {
-        //TODO
-    }
 
+        @Test
+        void returns_empty_if_no_student() throws SQLException {
+            assertThat(repository.findStudentsByClass("6AHIF")).isEmpty();
+        }
+
+        @Test
+        void returns_empty_if_no_student_with_given_class() throws SQLException {
+            var students = List.of(
+                    new Student("Baar", "Simon", MALE, 1, "1AHIF"),
+                    new Student("Dohnal", "Matthias Markus Edwin", MALE, 2, "1AHIF"),
+                    new Student("Ertl", "Maxima", FEMALE, 36, "1AHIF"),
+                    new Student("Schally", "Martin", MALE, 17, "3BHIF"),
+                    new Student("Vesely", "Flora", FEMALE, 19, "3BHIF"),
+                    new Student("Winkler", "Philipp Josef", MALE, 20, "3BHIF"),
+                    new Student("Hofmann", "Dominik", MALE, 21, "3BHIF"),
+                    new Student("Filipa", "Fec", DIVERSE, 15, "1CHIF")
+            );
+
+            var tmp = List.of(
+                    new Student("Baar", "Simon", MALE, 1, "1AHIF"),
+                    new Student("Dohnal", "Matthias Markus Edwin", MALE, 2, "1AHIF"),
+                    new Student("Ertl", "Maxima", FEMALE, 36, "1AHIF"));
+
+            for (var student : students) {
+                repository.save(student);
+            }
+
+            var studentsInClass = repository.findStudentsByClass("1AHIF");
+
+            assertThat(studentsInClass).containsExactlyElementsOf(tmp);
+        }
+    }
 }

@@ -5,6 +5,8 @@ import domain.parser.StudentParser;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Student {
 
@@ -37,21 +39,39 @@ public final class Student {
     }
 
     public static Student of(String csv) {
+        if (csv.charAt(csv.length() - 1) == ',') {
+            throw new IllegalArgumentException("; at the end of the line");
+        }
+
         String[] splitted = csv.split(",");
 
-        if (splitted.length!=5) {
+        if (splitted.length != 5) {
             throw new IllegalArgumentException();
         }
-        String firstName = splitted[0];
-        String secondName = splitted[1];
+        String firstName = splitted[1];
+        String secondName = splitted[0];
         Gender gender = null;
-        if (Objects.equals(splitted[2], "M")) {
-            gender = Gender.MALE;
-        } else if (Objects.equals(splitted[2], "W")) {
-            gender = Gender.FEMALE;
-        } else if (Objects.equals(splitted[2], "D")) {
-            gender = Gender.DIVERSE;
+
+        String[] parts = splitted[4].split("(?<=\\d)(?=\\D)");
+        int tmp = Integer.parseInt(parts[0]);
+
+        if (tmp < 1 || tmp > 5) {
+            throw new IllegalArgumentException("Number out of range, must be of [1,5]");
         }
+
+        if (!splitted[4].contains("HIF")) {
+            throw new IllegalArgumentException("Invalid class");
+        }
+
+        switch (splitted[2]) {
+            case "m"-> gender = Gender.MALE;
+            case "w" -> gender = Gender.FEMALE;
+            case "d" -> gender = Gender.DIVERSE;
+            default -> throw new IllegalArgumentException("Wrong Gender");
+        }
+
+
+
         int number = Integer.parseInt(splitted[3]);
         String schoolClass = splitted[4];
         return new Student(secondName, firstName, gender, number, schoolClass);
@@ -74,13 +94,19 @@ public final class Student {
         return gender;
     }
 
-    public int getNumber() {
+    public int getStudentNumber() {
         return number;
     }
 
     public String getSchoolClass() {
         return schoolClass;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
 
     @Override
     public String toString() {
@@ -98,4 +124,6 @@ public final class Student {
         StudentParser studentParser = new StudentParser();
         studentParser.readFromCsv(Path.of("src/test/resources/students.csv")).forEach(System.out::println);
     }
+
+
 }
