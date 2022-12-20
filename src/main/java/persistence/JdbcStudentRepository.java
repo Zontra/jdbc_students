@@ -2,6 +2,7 @@ package persistence;
 
 import domain.Gender;
 import domain.Student;
+import org.h2.bnf.RuleOptional;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,22 +20,26 @@ public record JdbcStudentRepository(Connection connection) implements StudentRep
 
     @Override
     public Optional<Student> findByNumberAndClass(int number, String schoolClass) throws SQLException {
-        return Optional.empty();
+        Statement statement = connection.createStatement();
+        return Optional.of(Student.of(String.valueOf(statement.executeQuery("SELECT * FROM student WHERE student_number = " + number + " AND class = " + schoolClass))));
     }
 
     @Override
     public Stream<Student> findAll() throws SQLException {
-        return null;
+        Statement statement = connection.createStatement();
+        return Stream.of(Student.of(String.valueOf(statement.executeQuery("SELECT * FROM student"))));
     }
 
     @Override
     public SortedSet<Student> findStudentsByClass(String schoolClass) throws SQLException {
-        return null;
+        Statement statement = connection.createStatement();
+        return new TreeSet<>(Arrays.asList(Student.of(String.valueOf(statement.executeQuery("SELECT * FROM student WHERE class = " + schoolClass)))));
     }
 
     @Override
     public Set<Student> findStudentsByGender(Gender gender) throws SQLException {
-        return null;
+        Statement statement = connection.createStatement();
+        return new TreeSet<>(Arrays.asList(Student.of(String.valueOf(statement.executeQuery("SELECT * FROM student WHERE gender = " + gender)))));
     }
 
     @Override

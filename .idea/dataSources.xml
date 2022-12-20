@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="JDBC" uuid="cce6f915-dadb-42a4-b235-ec18e64d7253">
+    <data-source source="LOCAL" name="StudentsJDBC" uuid="03056b70-df65-451e-9c1e-cbc6a711f395">
       <driver-ref>h2.unified</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:H:\4. Jahr\POS\JDBC</jdbc-url>
+      <jdbc-url>jdbc:h2:C:\Users\Patrick\IdeaProjects\StudentsJDBC</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

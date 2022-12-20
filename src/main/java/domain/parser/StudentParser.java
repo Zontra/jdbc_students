@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class StudentParser {
@@ -21,7 +22,13 @@ public class StudentParser {
         try(Stream<String> stringStream = Files.lines(path)) {
             stringStream
                     .skip(1)
-                    .map(Student::of)
+                    .map(s -> {
+                        try {
+                            return Student.of(s);
+                        } catch (IllegalArgumentException e) {
+                            return null;
+                        }
+                    }).filter(Objects::nonNull)
                     .forEach(students::add);
         }
         return students;

@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 public class DatabaseConnect {
     private static List<Student> lst = new ArrayList<>();
     private static Connection connection;
-    private static String user = "user";
+    private static String user = "admin";
     private static String password = "admin";
 
     public static void main(String[] args) throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:H:\\4. Jahr\\POS\\JDBC", user, password);
+        connection = DriverManager.getConnection("jdbc:h2:C:\\Users\\Patrick\\IdeaProjects\\StudentsJDBC", user, password);
 
         Statement statement = connection.createStatement();
 
@@ -31,7 +31,7 @@ public class DatabaseConnect {
                 "    student_number int,\n" +
                 "    class varchar(5),\n" +
                 "    primary key (id),\n" +
-             //   "    unique (class, student_number)\n" +
+                "    unique (class, student_number)\n" +
                 ");");
 
 

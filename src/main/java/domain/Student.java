@@ -1,5 +1,9 @@
 package domain;
 
+import domain.parser.StudentParser;
+
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Objects;
 
 public final class Student {
@@ -88,5 +92,10 @@ public final class Student {
                ", number=" + number +
                ", schoolClass='" + schoolClass + '\'' +
                '}';
+    }
+
+    public static void main(String[] args) throws IOException {
+        StudentParser studentParser = new StudentParser();
+        studentParser.readFromCsv(Path.of("src/test/resources/students.csv")).forEach(System.out::println);
     }
 }
